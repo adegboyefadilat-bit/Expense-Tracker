@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PennyPilot</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>PennyPilot</h1>
+    </header>
+
+    <div class="form-card">
+      <input type="text" id="expense-name" placeholder="Expense name">
+      <input type="number" id="expense-amount" placeholder="Amount">
+      <button id="add-btn">Add Expense</button>
+    </div>
+
+    <div class="summary">
+      <div class="summary-card">
+        <span class="summary-label">Total Expenses</span>
+        <span class="summary-value" id="total-display">₦0.00</span>
+      </div>
+      <div class="summary-card">
+        <span class="summary-label">Items Logged</span>
+        <span class="summary-value" id="count-display">0</span>
+      </div>
+    </div>
+
+    <section class="expenses-section">
+      <h2>All Expenses</h2>
+      <ul id="expense-list"></ul>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
