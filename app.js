@@ -5,6 +5,8 @@ const totalDisplay = document.getElementById('total-display');
 const countDisplay = document.getElementById('count-display');
 const nameInput = document.getElementById('expense-name');
 const amountInput = document.getElementById('expense-amount');
+const categorySelect = document.getElementById('expense-category');
+const filterSelect = document.getElementById('filter-category');
 const addBtn = document.getElementById('add-btn');
 
 function updateSummary() {
@@ -14,19 +16,22 @@ function updateSummary() {
 }
 
 function renderExpenses() {
-  if (expenses.length === 0) {
+  const filter = filterSelect.value;
+  const filtered = filter === 'All' ? expenses : expenses.filter(e => e.category === filter);
+
+  if (filtered.length === 0) {
     expenseList.innerHTML = '<li class="empty-message">No expenses yet</li>';
     return;
   }
 
-  expenseList.innerHTML = expenses
+  expenseList.innerHTML = filtered
     .map(
       (e, i) =>
         `<li class="expense-item">
-          <span class="expense-name">${e.name}</span>
+          <span class="expense-name">${e.name} <span class="expense-category">${e.category}</span></span>
           <span>
             <span class="expense-amount">₦${e.amount.toFixed(2)}</span>
-            <button class="delete-btn" data-index="${i}">&times;</button>
+            <button class="delete-btn" data-index="${expenses.indexOf(e)}">&times;</button>
           </span>
         </li>`
     )
@@ -42,9 +47,10 @@ function addExpense() {
     return;
   }
 
-  expenses.push({ name, amount });
+  expenses.push({ name, amount, category: categorySelect.value });
   nameInput.value = '';
   amountInput.value = '';
+  categorySelect.selectedIndex = 0;
   renderExpenses();
   updateSummary();
 }
@@ -62,6 +68,7 @@ expenseList.addEventListener('click', (e) => {
 });
 
 addBtn.addEventListener('click', addExpense);
+filterSelect.addEventListener('change', renderExpenses);
 
 nameInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') amountInput.focus();
